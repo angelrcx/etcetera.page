@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>etcétera | Productora Audiovisual y Zine Digital</title>
+  <meta name="description" content="Archivo de proyectos audiovisuales realizados en etc. y publicación digital, programas y ensayos visuales en ZINE etc.">
+  <link rel="canonical" href="https://etcetera.page/">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="etcétera">
+  <meta property="og:title" content="etc. / ZINE etc.">
+  <meta property="og:description" content="Productora audiovisual, publicación digital, programas y archivo.">
+  <meta property="og:url" content="https://etcetera.page/">
+  <meta property="og:image" content="https://etcetera.page/assets/og-lobby.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="es_MX">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="etc. / ZINE etc.">
+  <meta name="twitter:description" content="Productora audiovisual, publicación digital, programas y archivo.">
+  <meta name="twitter:image" content="https://etcetera.page/assets/og-lobby.jpg">
+
+  <!-- Tipografías: Switzer + Respaldo Didot -->
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=GFS+Didot&family=Bodoni+Moda:opsz,wght@6..96,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./assets/css/global.css">
+  <link rel="stylesheet" href="./assets/css/lobby.css">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://etcetera.page/#website",
+        "url": "https://etcetera.page/",
+        "name": "etcétera",
+        "alternateName": ["etc.", "ZINE etc.", "etcetera.page"],
+        "inLanguage": "es-MX"
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://etcetera.page/#organization",
+        "name": "etc.",
+        "url": "https://etcetera.page/",
+        "logo": "https://etcetera.page/assets/logo_etc.png",
+        "sameAs": [
+          "https://www.instagram.com/etcetera_03/",
+          "https://www.instagram.com/zine.etc/",
+          "https://www.youtube.com/@etceterapage"
+        ],
+        "subOrganization": [
+          {
+            "@type": "Organization",
+            "name": "etc. Productora Audiovisual",
+            "url": "https://etcetera.page/productora/"
+          },
+          {
+            "@type": "Organization",
+            "name": "ZINE etc.",
+            "url": "https://etcetera.page/zine/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- CABECERA SUPERIOR -->
+  <header class="site-header">
+    <div class="header-brands">
+      <a href="./productora/" class="brand-link" data-highlight="productora" title="Ir a Productora Audiovisual">
+        <span class="logo-etc-helvetica">etc.</span>
+      </a>
+
+      <span class="brand-slash" aria-hidden="true">/</span>
+
+      <a href="./zine/" class="brand-link" data-highlight="zine" title="Ir a ZINE etc.">
+        <span class="logo-zine-lockup">
+          <span class="zine-didot">ZINE</span>
+          <span class="zine-sub-etc">etc.</span>
+        </span>
+      </a>
+    </div>
+
+    <!-- Barra de filtros -->
+    <nav class="filter-bar" aria-label="Filtrar contenido">
+      <button type="button" class="filter-btn active" data-filter="all">Todo</button>
+      <button type="button" class="filter-btn" data-filter="productora">Audiovisual</button>
+      <button type="button" class="filter-btn" data-filter="zine">Zine</button>
+      <button type="button" class="filter-btn" data-filter="programas">Programas</button>
+    </nav>
+  </header>
+
+  <!-- LIENZO COLLAGE (Cada caja toma la forma natural de su imagen o video) -->
+  <main class="collage-stage" id="works-canvas">
+
+    <h1 class="sr-only">etcétera — Productora Audiovisual, Zine Digital y Programas</h1>
+
+    <!-- reel promo - VIDEO EN BUCLE -->
+    <figure class="work-item" data-category="productora">
+      <a href="./productora/" class="work-media">
+        <video src="./assets/video/picnic_promo2.mp4" autoplay muted loop playsinline preload="auto"></video>
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Comercial Picnic, 2026</span>
+        <span class="work-tag logo-etc-helvetica">etc.</span>
+      </figcaption>
+    </figure>
+
+    <!-- magneto - imagen -->
+    <figure class="work-item" data-category="productora">
+      <a href="./productora/" class="work-media">
+        <img src="./assets/img/007.webp" alt="etc 007" loading="eager">
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Videoclip Ofifical SA, 2026</span>
+        <span class="work-tag logo-etc-helvetica">etc.</span>
+      </figcaption>
+    </figure>
+
+    <!-- yano - video -->
+    <figure class="work-item" data-category="productora">
+      <a href="./productora/" class="work-media">
+        <video src="./assets/video/yano.mp4" autoplay muted loop playsinline preload="auto"></video>
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Videoclip Oficial SA, 2026</span>
+        <span class="work-tag logo-etc-helvetica">etc.</span>
+      </figcaption>
+    </figure>
+
+    <!-- laxa - video -->
+    <figure class="work-item" data-category="productora">
+      <a href="./productora/" class="work-media">
+        <video src="./assets/video/laxa.mp4" autoplay muted loop playsinline preload="auto"></video>
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Videoclip Ofifical SA, 2026</span>
+        <span class="work-tag logo-etc-helvetica">etc.</span>
+      </figcaption>
+    </figure>
+
+    <!-- reel promo SA -->
+    <figure class="work-item" data-category="productora">
+      <a href="./productora/" class="work-media">
+        <video src="./assets/video/reel_promo.mp4" autoplay muted loop playsinline preload="auto"></video>
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Comercial SA, 2026</span>
+        <span class="work-tag logo-etc-helvetica">etc.</span>
+      </figcaption>
+    </figure>
+
+    <!-- 02: Registro -->
+    <figure class="work-item" data-category="zine">
+      <a href="./zine/" class="work-media ratio-portrait">
+        <img src="./assets/img/registro02.webp" alt="ZINE etc. Registro" loading="eager">
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Registro 02 06/09</span>
+        <span class="work-tag">ZINE etc.</span>
+      </figcaption>
+    </figure>
+
+    <!-- 01: Registro -->
+    <figure class="work-item" data-category="zine">
+      <a href="./zine/" class="work-media ratio-portrait">
+        <img src="./assets/img/registro01.jpg" alt="ZINE etc. Registro" loading="eager">
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Registro 01 31/07</span>
+        <span class="work-tag">ZINE etc.</span>
+      </figcaption>
+    </figure>
+
+    <!-- 03: Programas -->
+    <figure class="work-item" data-category="programas zine">
+      <a href="./zine/" class="work-media ratio-classic">
+        <img src="./assets/img/programa-01.jpg" alt="Programa 01" loading="eager">
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Programa #01 — Sesión, 2026</span>
+        <span class="work-tag">Programas</span>
+      </figcaption>
+    </figure>
+
+    <!-- 04: Audiovisual -->
+    <figure class="work-item" data-category="productora">
+      <a href="./productora/" class="work-media ratio-square">
+        <img src="./assets/img/still-01.jpg" alt="Fotograma de rodaje" loading="lazy">
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Still de Rodaje, 2026</span>
+        <span class="work-tag logo-etc-helvetica">etc.</span>
+      </figcaption>
+    </figure>
+
+    <!-- 05: Audiovisual -->
+    <figure class="work-item" data-category="productora">
+      <a href="./productora/" class="work-media ratio-cinema">
+        <img src="./assets/img/proyecto-02.jpg" alt="Dirección y fotografía" loading="lazy">
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Dirección y Fotografía, 2026</span>
+        <span class="work-tag logo-etc-helvetica">etc.</span>
+      </figcaption>
+    </figure>
+
+    <!-- 06: Zine -->
+    <figure class="work-item" data-category="zine">
+      <a href="./zine/" class="work-media ratio-portrait">
+        <img src="./assets/img/zine-02.jpg" alt="Ensayo visual" loading="lazy">
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Ensayo Visual, 2026</span>
+        <span class="work-tag">ZINE etc.</span>
+      </figcaption>
+    </figure>
+
+    <!-- 07: Programas -->
+    <figure class="work-item" data-category="programas zine">
+      <a href="./zine/" class="work-media ratio-portrait">
+        <img src="./assets/img/programa-02.jpg" alt="Programa 02" loading="lazy">
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Programa #02, 2026</span>
+        <span class="work-tag">Programas</span>
+      </figcaption>
+    </figure>
+
+    <!-- 08: Audiovisual / Programas -->
+    <figure class="work-item" data-category="productora programas">
+      <a href="./productora/" class="work-media ratio-video">
+        <img src="./assets/img/proyecto-03.jpg" alt="Sesión en vivo" loading="lazy">
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Sesión en Vivo, 2026</span>
+        <span class="work-tag logo-etc-helvetica">etc.</span>
+      </figcaption>
+    </figure>
+
+    <!-- 09: Zine -->
+    <figure class="work-item" data-category="zine">
+      <a href="./zine/" class="work-media ratio-square">
+        <img src="./assets/img/zine-03.jpg" alt="Crónica visual" loading="lazy">
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Crónica Visual, 2026</span>
+        <span class="work-tag">ZINE etc.</span>
+      </figcaption>
+    </figure>
+
+    <!-- 10: Programas -->
+    <figure class="work-item" data-category="programas zine">
+      <a href="./zine/" class="work-media ratio-classic">
+        <img src="./assets/img/programa-03.jpg" alt="Programa 03" loading="lazy">
+      </a>
+      <figcaption class="work-caption">
+        <span class="work-title">Programa #03 — Archivo, 2026</span>
+        <span class="work-tag">Programas</span>
+      </figcaption>
+    </figure>
+
+  </main>
+
+  <!-- BARRA FLOTANTE INFERIOR (PC Y TELÉFONO) -->
+  <nav class="floating-dock" aria-label="Navegación rápida del ecosistema">
+    <a href="./productora/" class="dock-item" data-highlight="productora">
+      <span class="logo-etc-helvetica">etc.</span>
+      <small>Productora</small>
+    </a>
+
+    <span class="dock-divider" aria-hidden="true"></span>
+
+    <a href="./zine/" class="dock-item" data-highlight="zine">
+      <span class="zine-didot">ZINE</span>
+      <small>Zine &amp; Programas</small>
+    </a>
+
+    <span class="dock-divider" aria-hidden="true"></span>
+
+    <a href="https://www.youtube.com/@etceterapage" target="_blank" rel="noopener noreferrer" class="dock-item">
+      <span>YouTube ↗</span>
+      <small>@etceterapage</small>
+    </a>
+
+    <span class="dock-divider dock-hide-mobile" aria-hidden="true"></span>
+
+    <a href="https://www.instagram.com/etcetera_03/" target="_blank" rel="noopener noreferrer" class="dock-item dock-hide-mobile" data-highlight="productora">
+      <span>IG etc. ↗</span>
+      <small>@etcetera_03</small>
+    </a>
+
+    <span class="dock-divider dock-hide-mobile" aria-hidden="true"></span>
+
+    <a href="https://www.instagram.com/zine.etc/" target="_blank" rel="noopener noreferrer" class="dock-item dock-hide-mobile" data-highlight="zine">
+      <span>IG Zine ↗</span>
+      <small>@zine.etc</small>
+    </a>
+  </nav>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="site-footer">
+    <div class="footer-meta">
+      <span>© 2026 etcétera</span>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/etcetera_03/" target="_blank" rel="noopener">@etcetera_03</a>
+        <a href="https://www.instagram.com/zine.etc/" target="_blank" rel="noopener">@zine.etc</a>
+        <a href="https://www.youtube.com/@etceterapage" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./assets/js/lobby.js"></script>
+</body>
+</html>
