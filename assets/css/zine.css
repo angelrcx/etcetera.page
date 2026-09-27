@@ -1,0 +1,487 @@
+/* =================================================================
+   PÁGINA ZINE ETC.: PILA DE REVISTAS + SUELO DE CUADRÍCULA BLANCA
+   ================================================================= */
+body.zine-page {
+  background-color: #000000;
+  color: #f5f5f3;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Cabecera fija centrada verticalmente con la barra superior en PC */
+.zine-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 82px;
+  padding: 0 clamp(1.25rem, 4vw, 3.5rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 220;
+  pointer-events: none;
+}
+
+.zine-brand,
+.zine-ig {
+  pointer-events: auto;
+}
+
+.zine-brand {
+  font-size: clamp(1.7rem, 2.3vw, 2.15rem);
+  transition: opacity 0.2s ease;
+}
+
+.zine-brand:hover {
+  opacity: 0.65;
+}
+
+.zine-ig {
+  font-family: var(--font-helvetica);
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.zine-ig:hover {
+  color: var(--text-white);
+}
+
+/* =================================================================
+   NIVEL 1: MESA CENTRAL Y PILA DE REVISTAS
+   ================================================================= */
+.zine-table {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 5rem 1rem 5.8rem;
+}
+
+.stack-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.magazine-stack {
+  position: relative;
+  width: min(72vw, 300px);
+  height: min(94vw, 400px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mag-issue {
+  position: absolute;
+  width: 100%;
+  cursor: grab;
+  touch-action: none;
+  transform: translate(var(--ox, 0px), var(--oy, 0px)) rotate(var(--rot, 0deg));
+  transition: box-shadow 0.25s ease;
+}
+
+.mag-issue:active {
+  cursor: grabbing;
+}
+
+.mag-cover {
+  background: #0d0d0d;
+  border: 1px solid #222;
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.92);
+  overflow: hidden;
+}
+
+.mag-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 360px;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.mag-meta {
+  margin-top: 0.55rem;
+  background: rgba(8, 8, 8, 0.92);
+  border: 1px solid #242424;
+  padding: 0.45rem 0.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+}
+
+.open-issue-btn {
+  background: none;
+  border: none;
+  color: var(--text-white);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.stack-controls {
+  margin-top: 1.8rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 30;
+}
+
+.stack-btn {
+  background: #0b0b0b;
+  color: var(--text-muted);
+  border: 1px solid #262626;
+  padding: 0.45rem 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.stack-btn:hover {
+  color: var(--text-white);
+  border-color: var(--text-white);
+}
+
+/* =================================================================
+   NIVEL 2: SUELO DE CUADRÍCULA CON LÍNEAS BLANCAS Y FOTOS TIRADAS
+   ================================================================= */
+.scatter-floor {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background-color: #050505;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.22) 1px, transparent 1px);
+  background-size: 52px 52px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+}
+
+.scatter-floor.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Barra superior en PC con la misma altura (82px) para que el logo nunca se salga */
+.floor-bar {
+  position: relative;
+  z-index: 210;
+  min-height: 82px;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 0.75rem clamp(8rem, 12vw, 11.5rem) 0.75rem clamp(9.5rem, 16vw, 14rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.floor-info {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.floor-info strong {
+  font-size: 0.88rem;
+  color: var(--text-white);
+}
+
+.floor-info span {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.floor-actions {
+  display: flex;
+  gap: 0.65rem;
+}
+
+.floor-btn {
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: var(--text-white);
+  padding: 0.4rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.floor-btn:hover {
+  background: var(--text-white);
+  color: #000000;
+}
+
+.floor-canvas {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.scattered-photo {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  width: fit-content;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #0a0a0a;
+  transition: box-shadow 0.2s ease;
+}
+
+.scattered-photo:active {
+  cursor: grabbing;
+  box-shadow: 0 26px 65px rgba(0, 0, 0, 0.96);
+}
+
+.scattered-photo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: clamp(150px, 21vw, 275px);
+  max-height: clamp(160px, 27vh, 300px);
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.scattered-photo.is-cover-photo {
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+}
+
+.scattered-badge {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.82);
+  color: #fff;
+  font-size: 0.6rem;
+  padding: 2px 6px;
+  pointer-events: none;
+}
+
+/* =================================================================
+   NIVEL 3: GALERÍA EN GRANDE (MODAL AL TOCAR UNA FOTO DEL SUELO)
+   ================================================================= */
+.zine-reader {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0, 0, 0, 0.86);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1rem, 3vw, 2rem);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s ease, visibility 0.18s ease;
+  cursor: pointer;
+}
+
+.zine-reader.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.reader-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  cursor: default;
+}
+
+.reader-counter {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.reader-close {
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid #333;
+  color: var(--text-white);
+  padding: 0.4rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.reader-close:hover {
+  border-color: var(--text-white);
+}
+
+.reader-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  position: relative;
+  min-height: 0;
+}
+
+.reader-frame {
+  max-width: 82vw;
+  max-height: 76vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#reader-img {
+  width: auto;
+  height: auto;
+  max-width: 82vw;
+  max-height: 74vh;
+  object-fit: contain;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95);
+  cursor: default;
+}
+
+.nav-arrow {
+  background: rgba(15, 15, 15, 0.85);
+  border: 1px solid #2c2c2c;
+  color: var(--text-white);
+  width: 44px;
+  height: 44px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.nav-arrow:hover {
+  border-color: var(--text-white);
+  background: #1a1a1a;
+}
+
+/* =================================================================
+   BARRA FLOTANTE INFERIOR SIEMPRE VISIBLE EN ZINE (etc. + YouTube)
+   ================================================================= */
+.floating-dock {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 250;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(14px);
+  border: 1px solid #262626;
+  padding: 0.55rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.85);
+}
+
+.dock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+  padding: 0.15rem 0.35rem;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dock-item:hover {
+  opacity: 0.75;
+  transform: translateY(-1px);
+}
+
+.dock-item span {
+  font-size: 0.88rem;
+  color: var(--text-white);
+  white-space: nowrap;
+}
+
+.dock-item small {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+  white-space: nowrap;
+}
+
+.dock-divider {
+  width: 1px;
+  height: 24px;
+  background: #242424;
+}
+
+/* Adaptación Móvil (Intacta como en tu captura) */
+@media (max-width: 680px) {
+  .zine-header {
+    height: auto;
+    padding: 1rem 1.25rem;
+    align-items: baseline;
+  }
+
+  .scatter-floor {
+    background-size: 36px 36px;
+  }
+
+  .floor-bar {
+    min-height: auto;
+    padding: 3.8rem 1rem 0.75rem 1rem;
+  }
+
+  .floor-info span {
+    display: none;
+  }
+
+  .scattered-photo img {
+    max-width: 42vw;
+    max-height: 24vh;
+  }
+
+  .nav-arrow {
+    position: absolute;
+    bottom: 3.8rem;
+  }
+  .arrow-left { left: 25%; }
+  .arrow-right { right: 25%; }
+
+  #reader-img {
+    max-width: 92vw;
+    max-height: 62vh;
+  }
+
+  .floating-dock {
+    bottom: 12px;
+    padding: 0.5rem 1.1rem;
+    gap: 1.1rem;
+  }
+}

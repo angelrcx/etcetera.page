@@ -3,60 +3,131 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- SEO Editorial y de Radio -->
-  <title>zine.etc | Zine Digital Independiente</title>
-  <meta name="description" content="zine.etc: Publicación digital, programas de radio grabados, sesiones musicales, ensayos visuales y archivo.">
+  <title>ZINE etc. | Publicación Digital y Archivo</title>
+  <meta name="description" content="ZINE etc.: Publicación digital independiente, registros fotográficos, programas y ensayos visuales.">
   <link rel="canonical" href="https://etcetera.page/zine/">
   <meta name="robots" content="index, follow">
-  <link rel="icon" type="image/png" sizes="192x192" href="./assets/favicon.png">
-  <link rel="apple-touch-icon" href="./assets/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/favicon.png">
 
-  <!-- Open Graph (Identidad propia de zine.etc al compartir en redes) -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="zine.etc">
-  <meta property="og:title" content="zine.etc — Zine Digital">
-  <meta property="og:description" content="Textos, programas de radio grabados, música y cultura visual por etcétera.">
+  <meta property="og:site_name" content="ZINE etc.">
+  <meta property="og:title" content="ZINE etc. — Publicación Digital">
+  <meta property="og:description" content="Registros fotográficos, programas y cultura visual por etcétera.">
   <meta property="og:url" content="https://etcetera.page/zine/">
-  <meta property="og:image" content="https://etcetera.page/assets/logo_etc">
+  <meta property="og:image" content="https://etcetera.page/assets/img/registro02.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="es_MX">
 
-  <!-- Twitter / X Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="zine.etc — Zine Digital">
-  <meta name="twitter:image" content="https://etcetera.page/assets/logo_etc">
+  <!-- Tipografías -->
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=GFS+Didot&family=Bodoni+Moda:opsz,wght@6..96,400&display=swap" rel="stylesheet">
 
-  <!-- CSS exclusivo del Zine -->
-  <link rel="stylesheet" href="/assets/css/global.css">
-  <link rel="stylesheet" href="/assets/css/zine.css">
-
-  <!-- Schema.org: Declara el Zine + los programas de radio grabados -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "@id": "https://etcetera.page/zine/#zine",
-    "name": "zine.etc",
-    "alternateName": "Fanzine etcétera",
-    "url": "https://etcetera.page/zine/",
-    "description": "Zine digital y archivo.",
-    "isPartOf": {
-      "@id": "https://etcetera.page/#website"
-    },
-    "publisher": {
-      "@id": "https://etcetera.page/#organization"
-    },
-    "sameAs": [
-      "https://www.instagram.com/zine.etc/",
-      "https://www.youtube.com/@etceterapage"
-    ],
-    "hasPart": {
-      "@type": "PodcastSeries",
-      "name": "Radio zine.etc",
-      "description": "Programas de radio grabados, mixtapes y sesiones.",
-      "url": "https://etcetera.page/zine/#radio"
-    }
-  }
-  </script>
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/zine.css">
 </head>
+<body class="zine-page">
+
+  <!-- CABECERA SIEMPRE VISIBLE (El logo ZINE etc. siempre regresa a la pila de publicaciones de Zine) -->
+  <header class="zine-header">
+    <a href="./" id="zine-home-link" class="logo-zine-lockup zine-brand" title="Ver todas las publicaciones de ZINE etc.">
+      <span class="zine-didot">ZINE</span>
+      <span class="zine-sub-etc">etc.</span>
+    </a>
+
+    <a href="https://www.instagram.com/zine.etc/" target="_blank" rel="noopener noreferrer" class="zine-ig">@zine.etc</a>
+  </header>
+
+  <!--PILA DE REVISTAS)-->
+  <main class="zine-table" id="zine-table">
+    <h1 class="sr-only">ZINE etc. — Archivo de ediciones y registros</h1>
+
+    <p class="stack-hint">Arrastra las revistas para ver las pasadas o toca una portada para abrirla</p>
+
+    <div class="magazine-stack" id="magazine-stack">
+
+      <!-- REGISTRO 01 -->
+      <article class="mag-issue" data-issue="registro01" style="--rot: -4.5deg; --ox: -18px; --oy: 10px;">
+        <div class="mag-cover">
+          <img src="../assets/img/registro01.jpg" alt="Registro 01 31/07/26" draggable="false">
+        </div>
+        <div class="mag-meta">
+          <span>Registro 01 — 31/07/26</span>
+          <button type="button" class="open-issue-btn" data-open="registro01">abrir</button>
+        </div>
+      </article>
+
+      <!-- REGISTRO 02 -->
+      <article class="mag-issue" data-issue="registro02" style="--rot: 2.5deg; --ox: 10px; --oy: -6px;">
+        <div class="mag-cover">
+          <img src="../assets/img/registro02.webp" alt="Registro 02 06/09/26" draggable="false">
+        </div>
+        <div class="mag-meta">
+          <span>Registro 02 — 06/09/26</span>
+          <button type="button" class="open-issue-btn" data-open="registro02">abrir</button>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="stack-controls">
+      <button type="button" id="cycle-stack-btn" class="stack-btn">pasar revista al fondo</button>
+      <button type="button" id="reset-stack-btn" class="stack-btn">reacomodar pila</button>
+    </div>
+  </main>
+
+  <!-- NIVEL 2: SUELO DE CUADRÍCULA BLANCA CON FOTOS TIRADAS-->
+  <section id="scatter-floor" class="scatter-floor" aria-hidden="true">
+    <div class="floor-bar">
+      <div class="floor-info">
+        <strong id="floor-title">Registro</strong>
+        <span>Arrastra las fotos o toca cualquiera para abrir en galería</span>
+      </div>
+      <div class="floor-actions">
+        <button type="button" id="reshuffle-floor-btn" class="floor-btn">revolver fotos</button>
+        <button type="button" id="close-floor-btn" class="floor-btn">cerrar registro</button>
+      </div>
+    </div>
+
+    <div id="floor-canvas" class="floor-canvas"></div>
+  </section>
+
+  <!-- GALERÍA EN GRANDE-->
+  <div id="zine-reader" class="zine-reader" aria-hidden="true">
+    <div class="reader-top">
+      <span id="reader-title" class="reader-title">Registro</span>
+      <span id="reader-counter" class="reader-counter">1 / 10</span>
+      <button type="button" id="reader-close" class="reader-close">cerrar</button>
+    </div>
+
+    <div class="reader-stage">
+      <button type="button" id="prev-page" class="nav-arrow arrow-left" aria-label="Imagen anterior">←</button>
+      <figure class="reader-frame">
+        <img id="reader-img" src="" alt="Página del registro">
+      </figure>
+      <button type="button" id="next-page" class="nav-arrow arrow-right" aria-label="Imagen siguiente">→</button>
+    </div>
+  </div>
+
+  <!-- barra inferior -->
+  <nav class="floating-dock" aria-label="Navegación principal">
+    <a href="../" class="dock-item" title="Ir al lobby principal etcetera.page">
+      <span class="logo-etc-helvetica">etc.</span>
+    </a>
+
+    <span class="dock-divider" aria-hidden="true"></span>
+
+    <a href="https://www.youtube.com/@etceterapage" target="_blank" rel="noopener noreferrer" class="dock-item">
+      <span>YouTube</span>
+      <small>@etceterapage</small>
+    </a>
+  </nav>
+
+  <script src="../assets/js/zine.js"></script>
+</body>
+</html>
