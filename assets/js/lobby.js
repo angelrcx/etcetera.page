@@ -93,22 +93,37 @@ document.addEventListener('DOMContentLoaded', () => {
   // lo que satura el hilo principal en celulares de gama media (por eso
   // los clics se sentían lentos en Android). Con esto, un video se pausa
   // en cuanto sale de pantalla y solo "gasta" recursos si el usuario lo ve.
+  // Carga el archivo real del video (dataset.src -> src) solo la primera vez
+  // que hace falta. Antes, aunque no reproducíamos los videos fuera de pantalla,
+  // el navegador los descargaba TODOS igual por tener preload="auto" con src
+  // puesto desde el HTML. Ahora el <video> no tiene src hasta este momento.
+  function ensureVideoLoaded(video) {
+    if (!video.getAttribute('src') && video.dataset.src) {
+      video.setAttribute('src', video.dataset.src);
+      video.load();
+    }
+  }
+
   if ('IntersectionObserver' in window && allVideos.length) {
     const videoObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         const video = entry.target;
         if (entry.isIntersecting) {
+          ensureVideoLoaded(video);
           video.play().catch(() => {});
         } else {
           video.pause();
         }
       });
-    }, { threshold: 0.25 });
+    }, { threshold: 0.25, rootMargin: '250px 0px' }); // rootMargin: empieza a cargar un poco antes de que se vea, para que no se note el salto
 
     allVideos.forEach(video => videoObserver.observe(video));
   } else {
     // Respaldo por si el navegador no soporta IntersectionObserver (muy raro hoy en día)
-    allVideos.forEach(video => video.play().catch(() => {}));
+    allVideos.forEach(video => {
+      ensureVideoLoaded(video);
+      video.play().catch(() => {});
+    });
   }
 
   // 4. Guardar proyecto numerado al hacer clic hacia /productora/
@@ -143,10 +158,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openVideoModal(triggerEl) {
     const thumbVideo = triggerEl.querySelector('video');
+    // Si el video todavía no se había cargado (raro, pero puede pasar si se
+    // hace clic muy rápido), lo forzamos a cargar aquí antes de leer su src.
+    if (thumbVideo) ensureVideoLoaded(thumbVideo);
+
     const videoSrc =
       triggerEl.getAttribute('data-lightbox-video') ||
       thumbVideo?.currentSrc ||
-      thumbVideo?.getAttribute('src');
+      thumbVideo?.getAttribute('src') ||
+      thumbVideo?.dataset.src;
 
     if (!videoSrc || !lightbox || !lbPlayer) return;
 
