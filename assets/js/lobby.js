@@ -93,25 +93,34 @@ document.addEventListener('DOMContentLoaded', () => {
   // lo que satura el hilo principal en celulares de gama media (por eso
   // los clics se sentían lentos en Android). Con esto, un video se pausa
   // en cuanto sale de pantalla y solo "gasta" recursos si el usuario lo ve.
-  // Carga el archivo real del video (dataset.src -> src) solo la primera vez
-  // que hace falta. Antes, aunque no reproducíamos los videos fuera de pantalla,
-  // el navegador los descargaba TODOS igual por tener preload="auto" con src
-  // puesto desde el HTML. Ahora el <video> no tiene src hasta este momento.
+  // Carga el clip PREVIEW (corto y liviano) para el bucle de fondo.
+  // El video completo (data-full) NO se toca aquí; ese solo se carga
+  // cuando el usuario abre el visor en grande (ver openVideoModal más abajo).
   function ensureVideoLoaded(video) {
-    if (!video.getAttribute('src') && video.dataset.src) {
-      video.setAttribute('src', video.dataset.src);
+    if (!video.getAttribute('src') && video.dataset.preview) {
+      video.setAttribute('src', video.dataset.preview);
       video.load();
     }
   }
+
+  // Guardamos qué videos están visibles AHORA MISMO. Lo necesitamos porque
+  // al abrir el visor en grande pausamos todos los videos del fondo a mano
+  // (más abajo, en openVideoModal), sin que su visibilidad cambie realmente.
+  // Como el IntersectionObserver solo avisa cuando un video ENTRA o SALE de
+  // pantalla, si no guardamos esta lista, al cerrar el visor no hay forma
+  // de saber cuáles había que volver a reproducir.
+  const visibleVideos = new Set();
 
   if ('IntersectionObserver' in window && allVideos.length) {
     const videoObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         const video = entry.target;
         if (entry.isIntersecting) {
+          visibleVideos.add(video);
           ensureVideoLoaded(video);
           video.play().catch(() => {});
         } else {
+          visibleVideos.delete(video);
           video.pause();
         }
       });
@@ -123,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     allVideos.forEach(video => {
       ensureVideoLoaded(video);
       video.play().catch(() => {});
+      visibleVideos.add(video);
     });
   }
 
@@ -158,15 +168,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openVideoModal(triggerEl) {
     const thumbVideo = triggerEl.querySelector('video');
-    // Si el video todavía no se había cargado (raro, pero puede pasar si se
-    // hace clic muy rápido), lo forzamos a cargar aquí antes de leer su src.
-    if (thumbVideo) ensureVideoLoaded(thumbVideo);
 
+    // El visor en grande siempre usa el video completo (data-full),
+    // nunca el clip preview de 4 segundos que se ve en el collage.
     const videoSrc =
       triggerEl.getAttribute('data-lightbox-video') ||
+      thumbVideo?.dataset.full ||
       thumbVideo?.currentSrc ||
-      thumbVideo?.getAttribute('src') ||
-      thumbVideo?.dataset.src;
+      thumbVideo?.getAttribute('src');
 
     if (!videoSrc || !lightbox || !lbPlayer) return;
 
@@ -175,11 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (lbPlayer.getAttribute('src') !== videoSrc) {
       lbPlayer.setAttribute('src', videoSrc);
-    }
-    if (thumbVideo && thumbVideo.currentTime) {
-      try {
-        lbPlayer.currentTime = thumbVideo.currentTime;
-      } catch (_) {}
+      lbPlayer.load();
     }
 
     lbPlayer.muted = true;
@@ -193,8 +198,8 @@ document.addEventListener('DOMContentLoaded', () => {
     lightbox.classList.remove('is-open');
     lightbox.setAttribute('aria-hidden', 'true');
     lbPlayer.pause();
-    // Al cerrar, el IntersectionObserver retoma el control de qué videos
-    // reproducir según lo que esté visible; no forzamos play() en todos.
+    // Reactivamos solo los que están visibles en este momento (ver visibleVideos arriba)
+    visibleVideos.forEach(v => v.play().catch(() => {}));
   }
 
   // Funciona con .zoom-trigger y con [data-lightbox-video] en PC y pantallas táctiles
