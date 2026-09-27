@@ -160,6 +160,14 @@ document.addEventListener('DOMContentLoaded', () => {
     activeList.forEach((src, idx) => {
       const card = document.createElement('div');
       card.className = 'scattered-photo' + (idx === 0 ? ' is-cover-photo' : '');
+      // CORRECCIÓN: fijamos el tamaño también por JS (no solo por CSS).
+      // Así, si el navegador todavía no aplicó zine.css (por ejemplo por caché
+      // vieja en Safari), la foto nunca se ve "gigante" tapando la pantalla.
+      card.style.width = 'clamp(145px, 18vw, 240px)';
+      card.style.maxWidth = '240px';
+      card.style.position = 'absolute';
+      card.style.top = '48%';
+      card.style.left = '50%';
       card.style.zIndex = idx === 0 ? floorTopZ : 10 + idx;
 
       let posX = layout[idx].x;

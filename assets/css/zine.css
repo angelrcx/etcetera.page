@@ -188,6 +188,7 @@ body.zine-page {
   z-index: 210;
   min-height: 82px;
   background: rgba(0, 0, 0, 0.9);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.22);
   padding: 0.75rem clamp(8rem, 12vw, 11.5rem) 0.75rem clamp(9.5rem, 16vw, 14rem);
@@ -411,8 +412,8 @@ body.zine-page {
   transform: translateX(-50%);
   z-index: 250;
   background: rgba(10, 10, 10, 0.92);
-  backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   border: 1px solid #262626;
   padding: 0.55rem 1.4rem;
   display: flex;

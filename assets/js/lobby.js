@@ -84,8 +84,32 @@ document.addEventListener('DOMContentLoaded', () => {
     video.disablePictureInPicture = true;
     video.setAttribute('disablepictureinpicture', '');
     video.setAttribute('controlslist', 'nodownload nofullscreen noremoteplayback');
-    video.play().catch(() => {});
+    // Ya no forzamos play() aquí: lo controla el IntersectionObserver de abajo,
+    // así solo los videos que se ven en pantalla consumen batería/CPU.
   });
+
+  // 3.1 CORRECCIÓN: solo reproducir los videos que están visibles en el viewport.
+  // Antes los 13 videos del collage intentaban reproducirse todos a la vez,
+  // lo que satura el hilo principal en celulares de gama media (por eso
+  // los clics se sentían lentos en Android). Con esto, un video se pausa
+  // en cuanto sale de pantalla y solo "gasta" recursos si el usuario lo ve.
+  if ('IntersectionObserver' in window && allVideos.length) {
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.25 });
+
+    allVideos.forEach(video => videoObserver.observe(video));
+  } else {
+    // Respaldo por si el navegador no soporta IntersectionObserver (muy raro hoy en día)
+    allVideos.forEach(video => video.play().catch(() => {}));
+  }
 
   // 4. Guardar proyecto numerado al hacer clic hacia /productora/
   document.querySelectorAll('a[href*="#etc-"]').forEach(link => {
@@ -149,7 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
     lightbox.classList.remove('is-open');
     lightbox.setAttribute('aria-hidden', 'true');
     lbPlayer.pause();
-    allVideos.forEach(v => v.play().catch(() => {}));
+    // Al cerrar, el IntersectionObserver retoma el control de qué videos
+    // reproducir según lo que esté visible; no forzamos play() en todos.
   }
 
   // Funciona con .zoom-trigger y con [data-lightbox-video] en PC y pantallas táctiles
