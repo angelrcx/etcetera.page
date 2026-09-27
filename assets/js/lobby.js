@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 1. REORGANIZA LOS CUADROS AL FILTRAR
+  // 1. Reorganiza los cuadros al filtrar
   function reorganizeCollage(category) {
     const updateDOM = () => {
       let visibleIndex = 0;
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 2. OPACAR AL PASAR EL CURSOR SOBRE "etc." O "ZINE etc."
+  // 2. Opacar al pasar el cursor sobre "etc." o "ZINE etc."
   highlightTriggers.forEach(trigger => {
     const targetSection = trigger.getAttribute('data-highlight');
 
@@ -76,17 +76,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3. VIDEOS EN BUCLE EN EL COLLAGE
+  // 3. Videos en bucle en el collage (sin círculos flotantes del navegador)
   allVideos.forEach(video => {
     video.muted = true;
     video.loop = true;
     video.playsInline = true;
+    video.disablePictureInPicture = true;
     video.setAttribute('disablepictureinpicture', '');
     video.setAttribute('controlslist', 'nodownload nofullscreen noremoteplayback');
     video.play().catch(() => {});
   });
 
-  // 4. GUARDAR EL PROYECTO NUMERADO AL HACER CLIC PARA QUE /PRODUCTORA/ LO ABRA SIEMPRE
+  // 4. Guardar proyecto numerado al hacer clic hacia /productora/
   document.querySelectorAll('a[href*="#etc-"]').forEach(link => {
     link.addEventListener('click', () => {
       const hash = link.getAttribute('href').split('#')[1];
@@ -96,61 +97,69 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 5. APERTURA INSTANTÁNEA (0 MS) REUTILIZANDO EL MISMO NODO <VIDEO>
+  // 5. Visor en grande compatible con móvil (Android/iOS) y PC
   const lightbox = document.getElementById('video-lightbox');
   const lbClose = document.getElementById('lightbox-close');
-  const legacyPlayer = document.getElementById('lightbox-player');
-  if (legacyPlayer) legacyPlayer.remove(); // Elimina el segundo reproductor innecesario
+  let lbPlayer = document.getElementById('lightbox-player');
 
-  let activeVideo = null;
-  let activeOrigin = null;
+  if (lightbox && !lbPlayer) {
+    lbPlayer = document.createElement('video');
+    lbPlayer.id = 'lightbox-player';
+    lightbox.appendChild(lbPlayer);
+  }
 
-  document.querySelectorAll('.zoom-trigger').forEach(trigger => {
-    trigger.addEventListener('click', e => {
-      e.preventDefault();
-      const video = trigger.querySelector('video');
-      if (!video || !lightbox) return;
+  if (lbPlayer) {
+    lbPlayer.muted = true;
+    lbPlayer.loop = true;
+    lbPlayer.playsInline = true;
+    lbPlayer.setAttribute('playsinline', '');
+    lbPlayer.setAttribute('webkit-playsinline', '');
+    lbPlayer.disablePictureInPicture = true;
+  }
 
-      // Congela el tamaño de la caja en el collage para que no salte el diseño
-      const rect = trigger.getBoundingClientRect();
-      trigger.style.width = `${rect.width}px`;
-      trigger.style.height = `${rect.height}px`;
+  function openVideoModal(triggerEl) {
+    const thumbVideo = triggerEl.querySelector('video');
+    const videoSrc =
+      triggerEl.getAttribute('data-lightbox-video') ||
+      thumbVideo?.currentSrc ||
+      thumbVideo?.getAttribute('src');
 
-      activeVideo = video;
-      activeOrigin = trigger;
+    if (!videoSrc || !lightbox || !lbPlayer) return;
 
-      // Pausa los otros videos del fondo para liberar el 100% de la GPU
-      allVideos.forEach(v => {
-        if (v !== activeVideo) v.pause();
-      });
+    // Pausa los videos del fondo para que el teléfono reproduzca fluido el video grande
+    allVideos.forEach(v => v.pause());
 
-      // Mueve el mismo video ya decodificado al visor principal
-      activeVideo.id = 'lightbox-player';
-      lightbox.appendChild(activeVideo);
-      lightbox.classList.add('is-open');
-      lightbox.setAttribute('aria-hidden', 'false');
-      activeVideo.play().catch(() => {});
-    });
-  });
+    if (lbPlayer.getAttribute('src') !== videoSrc) {
+      lbPlayer.setAttribute('src', videoSrc);
+    }
+    if (thumbVideo && thumbVideo.currentTime) {
+      try {
+        lbPlayer.currentTime = thumbVideo.currentTime;
+      } catch (_) {}
+    }
+
+    lbPlayer.muted = true;
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    lbPlayer.play().catch(() => {});
+  }
 
   function closeLightbox() {
-    if (!lightbox || !activeVideo || !activeOrigin) return;
-
+    if (!lightbox || !lbPlayer) return;
     lightbox.classList.remove('is-open');
     lightbox.setAttribute('aria-hidden', 'true');
-
-    // Devuelve el video exactamente a su caja original
-    activeVideo.removeAttribute('id');
-    activeOrigin.appendChild(activeVideo);
-    activeOrigin.style.width = '';
-    activeOrigin.style.height = '';
-
-    // Reanuda todos los videos en bucle
+    lbPlayer.pause();
     allVideos.forEach(v => v.play().catch(() => {}));
-
-    activeVideo = null;
-    activeOrigin = null;
   }
+
+  // Funciona con .zoom-trigger y con [data-lightbox-video] en PC y pantallas táctiles
+  document.querySelectorAll('.zoom-trigger, [data-lightbox-video]').forEach(trigger => {
+    trigger.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      openVideoModal(trigger);
+    });
+  });
 
   lbClose?.addEventListener('click', e => {
     e.stopPropagation();
@@ -158,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   lightbox?.addEventListener('click', e => {
-    if (e.target !== activeVideo) {
+    if (e.target !== lbPlayer) {
       closeLightbox();
     }
   });
@@ -169,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 6. OCULTA IMÁGENES QUE AÚN NO EXISTAN
+  // 6. Oculta imágenes que aún no existan
   document.querySelectorAll('.work-media img').forEach(img => {
     const markEmpty = () => {
       img.style.display = 'none';
