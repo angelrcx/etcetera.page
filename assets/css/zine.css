@@ -507,3 +507,28 @@ body.zine-page {
     gap: 1.1rem;
   }
 }
+
+/* Sin el destello azul de toque/selección en móvil */
+body.zine-page,
+body.zine-page * {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.zine-page {
+  -webkit-touch-callout: none;
+}
+
+body.zine-page ::selection {
+  background: transparent;
+}
+
+/* El visor en grande y las fotos tiradas no deben seleccionarse ni arrastrarse */
+.zine-reader,
+.zine-reader * {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#reader-img {
+  -webkit-user-drag: none;
+}
