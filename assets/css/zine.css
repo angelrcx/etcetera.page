@@ -9,7 +9,9 @@ body.zine-page {
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+  -webkit-user-select: none;
   user-select: none;
+  -webkit-touch-callout: none;
 }
 
 /* Cabecera fija centrada verticalmente con la barra superior en PC */
@@ -37,8 +39,8 @@ body.zine-page {
   transition: opacity 0.2s ease;
 }
 
-.zine-brand:hover {
-  opacity: 0.65;
+@media (hover: hover) {
+  .zine-brand:hover { opacity: 0.65; }
 }
 
 .zine-ig {
@@ -187,9 +189,7 @@ body.zine-page {
   position: relative;
   z-index: 210;
   min-height: 82px;
-  background: rgba(0, 0, 0, 0.9);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.96);
   border-bottom: 1px solid rgba(255, 255, 255, 0.22);
   padding: 0.75rem clamp(8rem, 12vw, 11.5rem) 0.75rem clamp(9.5rem, 16vw, 14rem);
   display: flex;
@@ -300,9 +300,7 @@ body.zine-page {
   position: fixed;
   inset: 0;
   z-index: 300;
-  background: rgba(0, 0, 0, 0.86);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(0, 0, 0, 0.96);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -312,6 +310,7 @@ body.zine-page {
   pointer-events: none;
   transition: opacity 0.18s ease, visibility 0.18s ease;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .zine-reader.is-open {
@@ -411,9 +410,7 @@ body.zine-page {
   left: 50%;
   transform: translateX(-50%);
   z-index: 250;
-  background: rgba(10, 10, 10, 0.92);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
+  background: rgba(10, 10, 10, 0.97);
   border: 1px solid #262626;
   padding: 0.55rem 1.4rem;
   display: flex;
